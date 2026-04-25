@@ -12,9 +12,13 @@ POSSIBLE_SURROUNDINGS = ['xxxx','Nxxx','NExx','NxWx','xxxS','xExS','xxWS','xExx'
 
 class Program:
     def __init__(self):
+        '''Constructs a blank picobot file with no instructions
+        '''
         self.rules = {}
     
     def __repr__(self):
+        '''Returns the string representation of the picobot instructions
+        '''
         unsortedKeys = list(self.rules.keys())
         sortedKeys = sorted(unsortedKeys)
         s = ''
@@ -23,6 +27,8 @@ class Program:
         return s
 
     def randomize(self):
+        '''Creates a random set of picobot instructions
+        '''
         for state in range(NUMSTATES):
             for surr in POSSIBLE_SURROUNDINGS:
                 dirs = "".join([s for s in 'NEWS' if s not in surr])
