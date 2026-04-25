@@ -1,0 +1,5 @@
+Name: Yuna Jung, Austin Kim, & Saanvi Sakthivel
+Final Project: The Evolution of Picobot
+
+Together, we will be optimizing the Picobot to find the most efficient way to
+cover the entire screen through reinforcement learning.
