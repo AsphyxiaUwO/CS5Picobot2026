@@ -58,9 +58,9 @@ class Program:
         return new
     
     def __gt__(self, other):
-            """idk
-            """
-            return random.choice([True, False])
+        """idk
+        """
+        return random.choice([True, False])
 
     def __lt__(self, other):
         """idk
@@ -74,10 +74,25 @@ class World:
         self.state = 0
         self.program = program
         self.room = [[' ']*WIDTH for row in range(HEIGHT)]
+        for col in range(WIDTH):
+            self.room[0][col] = '+'
+            self.room[HEIGHT][col] = '+'
+        for row in range(HEIGHT):
+            self.room[row][0] = '+'
+            self.room[row][WIDTH] = '+'
     
     def __repr__(self):
-        s = '╔' + '═'*WIDTH + '╗' + '\n'
-        for layer in range(HEIGHT):
-            s += '║' + ' '*WIDTH + '║' + '\n'
-        s += '╚' + '═'*WIDTH + '╝'
-        return s
+
+
+    def getCurrentSoundings(self):
+        s = ''
+        if self.room[self.row-1][]
+
+
+    def step(self):
+
+
+    def run(self, steps):
+
+
+    def fractionVisitedCells(self):
