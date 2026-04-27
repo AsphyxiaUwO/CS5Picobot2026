@@ -50,12 +50,12 @@ class Program:
     def crossover(self, other):
         """Crosses over moves from two parents by states
         """
-        new = {}
+        child = Program()
         for state in range(NUMSTATES):
             parent = random.choice([self, other])
             for surr in POSSIBLE_SURROUNDINGS:
-                new[(state, surr)] = parent[(state, surr)]
-        return new
+                child.rules[(state, surr)] = parent.rules[(state, surr)]
+        return child
     
     def __gt__(self, other):
         """idk
@@ -69,6 +69,8 @@ class Program:
 
 class World:
     def __init__(self, initial_row, initial_col, program):
+        """Creates a picbot world with edges
+        """
         self.row = initial_row
         self.col = initial_col
         self.state = 0
@@ -76,32 +78,68 @@ class World:
         self.room = [[' ']*WIDTH for row in range(HEIGHT)]
         for col in range(WIDTH):
             self.room[0][col] = '+'
-            self.room[HEIGHT][col] = '+'
+            self.room[HEIGHT-1][col] = '+'
         for row in range(HEIGHT):
             self.room[row][0] = '+'
-            self.room[row][WIDTH] = '+'
+            self.room[row][WIDTH-1] = '+'
+        self.room[self.row][self.col] = 'o'
     
     def __repr__(self):
-        # Austin
-
-
-    def getCurrentSoundings(self):
+        self.room[self.row][self.col] = 'P'
         s = ''
-        if self.room[self.row-1][]
-        # Austin
+        for row in range(HEIGHT):
+            s += "".join(self.room[row]) + "\n"
+        self.room[self.row][self.col] = 'o'
+        return s
+
+    def getCurrentSurroundings(self):
+        s = ''
+        if self.room[self.row-1][self.col] == '+':
+            s += 'N'
+        else:
+            s += 'x'
+        if self.room[self.row][self.col+1] == '+':
+            s += 'E'
+        else:
+            s += 'x'
+        if self.room[self.row][self.col-1] == '+':
+            s += 'W'
+        else:
+            s += 'x'
+        if self.room[self.row+1][self.col] == '+':
+            s += 'S'
+        else:
+            s += 'x'
+        return s
 
 
     def step(self):
-        # Yuna
+        (nextMove, nextState) = self.program.getMove(self.state, self.getCurrentSurroundings())
+        if nextMove == 'N':
+            self.row -= 1
+        elif nextMove == 'E':
+            self.col += 1
+        elif nextMove == 'W':
+            self.col -= 1
+        elif nextMove == 'S':
+            self.row += 1
+        self.state = nextState
+        self.room[self.row][self.col] = 'o'
 
     def run(self, steps):
-        # Saanvi
+        for i in range(steps):
+            self.step()
 
     def fractionVisitedCells(self):
-        # Yuna
+        flat = "".join([item for row in self.room for item in row])
+        visited = flat.count('o')
+        total = WIDTH*HEIGHT - flat.count('+')
+        return visited/total
 
 def evaluateFitness(program, trials, steps):
+    print('boop')
     # Saanvi
 
 def GA(popsize, numgens):
+    print('boop')
     # Austin, but we'll work on this together
