@@ -82,17 +82,26 @@ class World:
             self.room[row][WIDTH] = '+'
     
     def __repr__(self):
+        # Austin
 
 
     def getCurrentSoundings(self):
         s = ''
         if self.room[self.row-1][]
+        # Austin
 
 
     def step(self):
-
+        # Yuna
 
     def run(self, steps):
-
+        # Saanvi
 
     def fractionVisitedCells(self):
+        # Yuna
+
+def evaluateFitness(program, trials, steps):
+    # Saanvi
+
+def GA(popsize, numgens):
+    # Austin, but we'll work on this together
