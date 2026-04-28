@@ -1,0 +1,15 @@
+# Austin Kim, Saanvi Sakthivel, & Yuna Jung
+# CS5 Final Project: Picobot
+# 4/27/2026
+
+Our starter.py initially created the blank picobot instruction file, returned the string
+representation of the picobot instruction, and creates a random set of picobot instructions.
+Since then, we've updated our program to have a more in-depth Program class that mutates and 
+crossovers different tests of picobot instructions to eventually find the best one. Additionally,
+we've created a world class that creates the picobot world/environment. Our program works with an
+number for population size and a number of generations. The population size is the total collection
+of Picobot programs being tested at once. The number of generations is the number of times the entire
+population is filtered, bred, and replaced. After all the generations have ran, we get an output of what
+the best picobot program is, which will be the last one. This is because we assumme after all the generations
+and mutations it has endured, we assume it will be the best one. This does not guarantee the entire Picobot
+grid will fill, but it is the best out of our run this time.
