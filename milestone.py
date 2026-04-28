@@ -150,9 +150,9 @@ def evaluateFitness(program, trials, steps):
 def GA(popsize, numgens):
     programs = [Program().randomize() for i in range(popsize)]
     L = [(evaluateFitness(p, 20, 800), p) for p in programs]
-    for q in range(numgens):
-        SL = sorted(L)
-        bestPrograms = SL[-(popsize//10):]  # top 10%
+    SL = sorted(L)
+    for generation in range(numgens):
+        bestPrograms = SL[-(popsize//10):]
         nextGen = list(bestPrograms)
         while len(nextGen) < popsize:
             p1 = random.choice(bestPrograms)[1]
@@ -162,4 +162,57 @@ def GA(popsize, numgens):
                 child.mutate()
             nextGen.append((evaluateFitness(child, 20, 800), child))
         L = nextGen
-    return sorted(L)[-1][1]
+        SL = sorted(L)
+        print("Generation " + generation)
+        print("Average Fitness: " + sum(t[0] for t in SL) / len(SL))
+        print("Best Fitness: " + SL[-1][1])
+    return "Best Picobot Program\n" + SL[-1][1]
+
+"""
+Example Output:
+0 NExx -> S 3
+0 NxWx -> S 1
+0 Nxxx -> E 3
+0 xExS -> N 1
+0 xExx -> S 3
+0 xxWS -> N 2
+0 xxWx -> N 2
+0 xxxS -> W 4
+0 xxxx -> W 0
+1 NExx -> W 2
+1 NxWx -> E 4
+1 Nxxx -> S 0
+1 xExS -> W 1
+1 xExx -> N 4
+1 xxWS -> N 4
+1 xxWx -> S 2
+1 xxxS -> E 2
+1 xxxx -> E 0
+2 NExx -> W 2
+2 NxWx -> S 3
+2 Nxxx -> E 4
+2 xExS -> W 4
+2 xExx -> W 0
+2 xxWS -> N 4
+2 xxWx -> S 1
+2 xxxS -> N 2
+2 xxxx -> N 2
+3 NExx -> S 4
+3 NxWx -> E 2
+3 Nxxx -> S 3
+3 xExS -> N 4
+3 xExx -> S 2
+3 xxWS -> N 4
+3 xxWx -> S 2
+3 xxxS -> E 0
+3 xxxx -> S 3
+4 NExx -> W 1
+4 NxWx -> E 3
+4 Nxxx -> S 3
+4 xExS -> N 3
+4 xExx -> N 4
+4 xxWS -> N 4
+4 xxWx -> N 4
+4 xxxS -> E 2
+4 xxxx -> S 3
+"""
