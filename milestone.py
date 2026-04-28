@@ -163,9 +163,9 @@ def GA(popsize, numgens):
             nextGen.append((evaluateFitness(child, 20, 800), child))
         L = nextGen
         SL = sorted(L)
-        print("Generation " + generation)
-        print("Average Fitness: " + sum(t[0] for t in SL) / len(SL))
-        print("Best Fitness: " + SL[-1][1])
+        print("Generation " + str(generation))
+        print("Average Fitness: " + str(sum(t[0] for t in SL) / len(SL)))
+        print("Best Fitness: " + str(SL[-1][0]))
     return "Best Picobot Program\n" + SL[-1][1]
 
 """
