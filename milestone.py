@@ -1,3 +1,7 @@
+# Austin Kim, Saanvi Sakthivel, & Yuna Jung
+# CS5 Final Project: Picobot
+# 4/27/2026
+
 import random
 
 HEIGHT = 25
@@ -145,18 +149,17 @@ def evaluateFitness(program, trials, steps):
 
 def GA(popsize, numgens):
     programs = [Program().randomize() for i in range(popsize)]
-    L = [(evaluateFitness(p, 42, 1000), p) for p in programs]
+    L = [(evaluateFitness(p, 20, 800), p) for p in programs]
     for q in range(numgens):
         SL = sorted(L)
-        fitSL = SL[-popsize//10:]
-        for i in range(popsize*9//10):
-            child = random.choice(fitSL)[1].crossover(random.choice(fitSL)[1])
-            fitSL += [(evaluateFitness(child, 42, 1000), child)]
-        for i in range(popsize//20):
-            index = random.randrange(0, len(fitSL))
-            fitSL[index][1].mutate()
-            fitSL[index] = (evaluateFitness(fitSL[index][1], 42, 1000), fitSL[index][1])
-        L = sorted(fitSL)[-popsize:]
-    SL = sorted(L)
-    best = SL[-1][1]
-    return best
+        bestPrograms = SL[-(popsize//10):]  # top 10%
+        nextGen = list(bestPrograms)
+        while len(nextGen) < popsize:
+            p1 = random.choice(bestPrograms)[1]
+            p2 = random.choice(bestPrograms)[1]
+            child = p1.crossover(p2)
+            if random.random() < 0.5:
+                child.mutate()
+            nextGen.append((evaluateFitness(child, 20, 800), child))
+        L = nextGen
+    return sorted(L)[-1][1]
