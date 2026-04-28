@@ -11,6 +11,7 @@ NUMSTATES = 5
 POSSIBLE_SURROUNDINGS = ['xxxx','Nxxx','NExx','NxWx','xxxS','xExS','xxWS','xExx','xxWx']
 
 class Program:
+    ""
     def __init__(self):
         """Creates a blank picobot instruction file
         """
@@ -88,6 +89,8 @@ class World:
         self.room[self.row][self.col] = 'o'
     
     def __repr__(self):
+        """returns a string of the world where Picobot is shown as 'P' and visited cells as 'o'
+        """
         self.room[self.row][self.col] = 'P'
         s = ''
         for row in range(HEIGHT):
@@ -96,6 +99,8 @@ class World:
         return s
 
     def getCurrentSurroundings(self):
+        """Notes whether there is a wall in the north, east, west, or south to note the surrounding
+        """
         s = ''
         if self.room[self.row-1][self.col] == '+':
             s += 'N'
@@ -117,6 +122,8 @@ class World:
 
 
     def step(self):
+        """looks at the current surroundings and executes Picobot's next move and state based on the current surrounding
+        """
         (nextMove, nextState) = self.program.getMove(self.state, self.getCurrentSurroundings())
         if nextMove == 'N':
             self.row -= 1
@@ -130,16 +137,22 @@ class World:
         self.room[self.row][self.col] = 'o'
 
     def run(self, steps):
+        """determine how many times to run the program
+        """
         for i in range(steps):
             self.step()
 
     def fractionVisitedCells(self):
+        """calculates the fraction of cells that were visited
+        """
         flat = "".join([item for row in self.room for item in row])
         visited = flat.count('o')
         total = WIDTH*HEIGHT - flat.count('+')
         return visited/total
 
 def evaluateFitness(program, trials, steps):
+    """calculates the fitness of the program using the fractionVisited function 
+    """
     fracs = []
     for i in range(trials):
         w = World(random.randrange(1, WIDTH-1), random.randrange(1, HEIGHT-1), program)
@@ -148,6 +161,8 @@ def evaluateFitness(program, trials, steps):
     return sum(fracs) / len(fracs)
 
 def GA(popsize, numgens):
+    """runs the genenic algorithm with the population size and returns the best algorithm with the best fitness after given number of generations
+    """
     programs = [Program().randomize() for i in range(popsize)]
     L = [(evaluateFitness(p, 20, 800), p) for p in programs]
     SL = sorted(L)
@@ -169,51 +184,3 @@ def GA(popsize, numgens):
     print("Best Picobot Program")
     return SL[-1][1]
 
-"""
-Example Output:
-0 NExx -> S 3
-0 NxWx -> S 1
-0 Nxxx -> E 3
-0 xExS -> N 1
-0 xExx -> S 3
-0 xxWS -> N 2
-0 xxWx -> N 2
-0 xxxS -> W 4
-0 xxxx -> W 0
-1 NExx -> W 2
-1 NxWx -> E 4
-1 Nxxx -> S 0
-1 xExS -> W 1
-1 xExx -> N 4
-1 xxWS -> N 4
-1 xxWx -> S 2
-1 xxxS -> E 2
-1 xxxx -> E 0
-2 NExx -> W 2
-2 NxWx -> S 3
-2 Nxxx -> E 4
-2 xExS -> W 4
-2 xExx -> W 0
-2 xxWS -> N 4
-2 xxWx -> S 1
-2 xxxS -> N 2
-2 xxxx -> N 2
-3 NExx -> S 4
-3 NxWx -> E 2
-3 Nxxx -> S 3
-3 xExS -> N 4
-3 xExx -> S 2
-3 xxWS -> N 4
-3 xxWx -> S 2
-3 xxxS -> E 0
-3 xxxx -> S 3
-4 NExx -> W 1
-4 NxWx -> E 3
-4 Nxxx -> S 3
-4 xExS -> N 3
-4 xExx -> N 4
-4 xxWS -> N 4
-4 xxWx -> N 4
-4 xxxS -> E 2
-4 xxxx -> S 3
-"""
