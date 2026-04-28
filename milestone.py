@@ -1,7 +1,3 @@
-# Austin Kim, Saanvi Sakthivel, & Yuna Jung
-# CS5 Final Project: Picobot
-# 4/24/2026
-
 import random
 
 HEIGHT = 25
@@ -33,6 +29,7 @@ class Program:
             for surr in POSSIBLE_SURROUNDINGS:
                 dirs = "".join([s for s in 'NEWS' if s not in surr])
                 self.rules[(state, surr)] = (random.choice(dirs), random.randrange(0, NUMSTATES))
+        return self
     
     def getMove(self, state, surroundings):
         """Returns the move of picobot based on the state and surroundings
@@ -46,6 +43,8 @@ class Program:
         surr = key[1]
         dirs = "".join([s for s in 'NEWS' if s not in surr])
         self.rules[key] = (random.choice(dirs), random.randrange(0, NUMSTATES))
+        return self
+        
     
     def crossover(self, other):
         """Crosses over moves from two parents by states
@@ -58,12 +57,12 @@ class Program:
         return child
     
     def __gt__(self, other):
-        """idk
+        """Just makes the greater than operator not break
         """
         return random.choice([True, False])
 
     def __lt__(self, other):
-        """idk
+        """Just makes the less than operator not break
         """
         return random.choice([True, False])
 
@@ -137,9 +136,27 @@ class World:
         return visited/total
 
 def evaluateFitness(program, trials, steps):
-    print('boop')
-    # Saanvi
+    fracs = []
+    for i in range(trials):
+        w = World(random.randrange(1, WIDTH-1), random.randrange(1, HEIGHT-1), program)
+        w.run(steps)
+        fracs += [w.fractionVisitedCells()]
+    return sum(fracs) / len(fracs)
 
 def GA(popsize, numgens):
-    print('boop')
-    # Austin, but we'll work on this together
+    programs = [Program().randomize() for i in range(popsize)]
+    L = [(evaluateFitness(p, 42, 1000), p) for p in programs]
+    for q in range(numgens):
+        SL = sorted(L)
+        fitSL = SL[-popsize//10:]
+        for i in range(popsize*9//10):
+            child = random.choice(fitSL)[1].crossover(random.choice(fitSL)[1])
+            fitSL += [(evaluateFitness(child, 42, 1000), child)]
+        for i in range(popsize//20):
+            index = random.randrange(0, len(fitSL))
+            fitSL[index][1].mutate()
+            fitSL[index] = (evaluateFitness(fitSL[index][1], 42, 1000), fitSL[index][1])
+        L = sorted(fitSL)[-popsize:]
+    SL = sorted(L)
+    best = SL[-1][1]
+    return best
