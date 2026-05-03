@@ -8,7 +8,7 @@ import copy
 HEIGHT = 25
 WIDTH = 25
 AREA = WIDTH*HEIGHT
-NUMSTATES = 7
+NUMSTATES = 10
 
 allSpots = list(range(AREA))
 
@@ -354,20 +354,20 @@ def GA(popsize, numgens, map):
     """runs the genenic algorithm with the population size and returns the best algorithm with the best fitness after given number of generations
     """
     programs = [Program().randomize() for i in range(popsize)]
-    L = [(evaluateFitness(p, 20, 800, map), p) for p in programs]
+    L = [(evaluateFitness(p, 30, max(530*2//numgens,530), map), p) for p in programs]
     SL = sorted(L)
     for generation in range(numgens):
         bestPrograms = SL[-(popsize//10):]
-        nextGen = list(bestPrograms)
+        nextGen = []
         while len(nextGen) < popsize:
             p1 = random.choice(bestPrograms)[1]
             p2 = random.choice(bestPrograms)[1]
             child = p1.crossover(p2)
-            if random.random() < 0.7:
+            if random.random() < 0.5:
                 child.mutate()
-                if random.random() < 0.5:
-                    child.mutate()
-            nextGen.append((evaluateFitness(child, 20, 800, map), child))
+            if random.random() < 0.5:
+                child.mutate()
+            nextGen.append((evaluateFitness(child, 30, max(530*2*generation//numgens,530), map), child))
         L = nextGen
         SL = sorted(L)
         print("Generation " + str(generation))
