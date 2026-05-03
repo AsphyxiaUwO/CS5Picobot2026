@@ -1,0 +1,30 @@
+# Austin Kim, Saanvi Sakthivel, & Yuna Jung
+# CS5 Final Project: Picobot
+# 4/27/2026
+
+Since the milestone, we've upgraded our PicoBot in numerous ways to handle
+more complex situations. The first is by doubling the number of available 
+states from 5 to 10. The purpose in doing this was to allow PicoBot to
+remember more complex sequences. This also allows the genetic algorithm
+more room for sophisticated behaviors by having different sub-routines
+for different parts of a complex map. Additionally, we've upgraded the
+PicoBot to understand 15 possible combinations of walls rather than the
+original 9. This way if the PicoBot encounters a wall configuration it does
+not recognize it won't crash or stop. One of the most obvious upgrades to our
+code is the variety of complex maps PicoBot can handle. Now, our PicoBot can
+handle maps like mazes, diamonds, and rooms with obstacles as opposed to the
+original blank rectangle room. We've also upgraded the mutation frequency from
+one to two, meaning there are two potential mutations per child instead of just
+one. This allows for more randomization into the pool and helps the program
+discover more new strategies that a lower mutation rate may not find. Furthermore,
+we've upgraded our code to slowly increase the number of steps as the generations
+go on. So, rather than having 800 steps every single time the number of steps
+increases as the generations progress, allowing the code to be more accurate
+as it progresses. Finally, we've linked our code to a "gen.txt" function that
+automaticaly writes the best program of every generation to a text file, allowing
+the user to keep record of the best performer from any point in evolution.
+
+Overall, this project presented us with challenges and lessons that inevitably
+deepend our abilities. However, being able to revisit the first project we worked
+on in CS5 with our newfound knowledge to develop it into a more complex program
+was a fun experience! It was nice to see how far we've come!
