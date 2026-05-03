@@ -350,6 +350,13 @@ def evaluateFitness(program, trials, steps, map):
         fracs += [w.fractionVisitedCells()]
     return sum(fracs) / len(fracs)
 
+def saveToFile(filename, p):
+        """Saves the data from Program p
+           to a file named filename."""
+        f = open(filename, "w")
+        print(p, file = f)
+        f.close()
+
 def GA(popsize, numgens, map):
     """runs the genenic algorithm with the population size and returns the best algorithm with the best fitness after given number of generations
     """
@@ -358,6 +365,7 @@ def GA(popsize, numgens, map):
     SL = sorted(L)
     for generation in range(numgens):
         bestPrograms = SL[-(popsize//10):]
+        saveToFile(f"gen{generation}.txt", bestPrograms[0])
         nextGen = []
         while len(nextGen) < popsize:
             p1 = random.choice(bestPrograms)[1]
