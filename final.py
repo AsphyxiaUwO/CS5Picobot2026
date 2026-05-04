@@ -365,7 +365,7 @@ def GA(popsize, numgens, map):
     SL = sorted(L)
     for generation in range(numgens):
         bestPrograms = SL[-(popsize//10):]
-        saveToFile(f"gen{generation}.txt", bestPrograms[0])
+        saveToFile(f"gen{generation}.txt", bestPrograms[0][1])
         nextGen = []
         while len(nextGen) < popsize:
             p1 = random.choice(bestPrograms)[1]
